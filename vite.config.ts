@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0', '.kinsta.app'],
+    allowedHosts: true,
+    port: 3000,
   },
 })

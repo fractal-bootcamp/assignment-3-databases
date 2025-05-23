@@ -34,6 +34,7 @@ FROM base AS release
 COPY --from=prerelease /usr/src/app/server.ts .
 COPY --from=prerelease /usr/src/app/index.html .
 COPY --from=prerelease /usr/src/app/package.json .
+COPY --from=prerelease /usr/src/app/vite.config.ts .
 COPY --from=prerelease /usr/src/app/src ./src
 COPY --from=install /temp/prod/node_modules node_modules
 
