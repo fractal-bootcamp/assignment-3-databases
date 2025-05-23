@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
 import './App.css'
-import React from 'react'
 import type { GameState } from './game'
 import { TicTacToeApiClient } from './api-client'
 
