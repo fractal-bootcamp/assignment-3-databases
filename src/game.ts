@@ -1,20 +1,25 @@
+import { v4 as uuidv4} from 'uuid'
 
 export type Player = 'X' | 'O'
 export type GameResult = Player | 'Tie' | null
 export type GameState = {
+    id: string,
     currentPlayer: 'X' | 'O'
     board: (Player | null)[][]
     result: GameResult
 }
 
-export const initialGameState: GameState = {
-    currentPlayer: 'X',
-    board: [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-    ],
-    result: null,
+export function createGame(): GameState {
+    return {
+        id: uuidv4(),
+        currentPlayer: 'X',
+        board: [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ],
+        result: null,
+    }
 }
 
 export function makeMove(gameState: GameState, row: number, col: number): GameState {

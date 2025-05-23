@@ -1,12 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-import { GameState, initialGameState, makeMove, getResult } from './game'
+import type { GameState } from './game'
+import { TicTacToeApiClient } from './api-client'
 
 function App() {
-  const [gameState, setGameState] = useState<GameState>(initialGameState)
+  const apiClient = new TicTacToeApiClient()
+  const [gameState, setGameState] = useState<GameState | null>(null)
 
-  const handleCellClick = (row: number, col: number) => {
-    setGameState(prev => makeMove(prev, row, col))
+  useEffect(() => {
+    const initializeGame = async () => {
+      if (gameState) {
+        return
+      }
+      const initialState = await apiClient.createGame()
+      setGameState(initialState)
+    }
+    initializeGame()
+  }, [])
+
+  const handleCellClick = async (row: number, col: number) => {
+    if (gameState) {
+      try {
+        const updatedState = await apiClient.makeMove(gameState.id, row, col)
+        setGameState(updatedState)
+      } catch (error) {
+        console.error('Failed to make move:', error)
+      }
+    }
+  }
+
+  if (!gameState) {
+    return <div>Loading...</div>
   }
 
   return (
