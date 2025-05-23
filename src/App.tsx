@@ -1,21 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import React from 'react'
 import type { GameState } from './game'
 import { TicTacToeApiClient } from './api-client'
 
 function App() {
-  const apiClient = new TicTacToeApiClient()
+  const apiClient = useMemo(() => new TicTacToeApiClient(), [])
   const [gameState, setGameState] = useState<GameState | null>(null)
 
+  async function initializeGame() {
+    const initialState = await apiClient.createGame()
+    setGameState(initialState)
+  }
+
   useEffect(() => {
-    const initializeGame = async () => {
-      if (gameState) {
-        return
-      }
-      const initialState = await apiClient.createGame()
-      setGameState(initialState)
-    }
+    // note: this is called twice in development due to using StrictMode, which intentionally invokes
+    // all effects twice (???)
+    // in production, it's called once, due to the empty dependency array.
     initializeGame()
   }, [])
 
