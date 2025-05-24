@@ -1,11 +1,12 @@
-import { v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 export type Player = 'X' | 'O'
+export type Board = (Player | null)[][]
 export type GameResult = Player | 'Tie' | null
 export type GameState = {
     id: string,
     currentPlayer: 'X' | 'O'
-    board: (Player | null)[][]
+    board: Board
     result: GameResult
 }
 
