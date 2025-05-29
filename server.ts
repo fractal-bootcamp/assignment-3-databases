@@ -1,9 +1,10 @@
 import express from "express";
 import ViteExpress from "vite-express";
 import { InMemoryTicTacToeApi } from "./src/api";
+import { DbTicTacToeApi } from "./src/db/db";
 const app = express();
 app.use(express.json())
-const api = new InMemoryTicTacToeApi()
+const api = new DbTicTacToeApi()
 
 app.get("/message", (_, res) => res.send("Hello from express!"));
 app.get("/api/game/:gameId", async (req, res) => {

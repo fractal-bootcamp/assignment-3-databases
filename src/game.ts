@@ -3,7 +3,7 @@ export type Player = 'X' | 'O'
 export type GameResult = Player | 'Tie' | null
 export type Board = (Player | null)[][]
 export type GameState = {
-    id: string,
+    id: string
     currentPlayer: 'X' | 'O'
     board: Board
     result: GameResult

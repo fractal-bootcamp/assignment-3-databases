@@ -1,11 +1,12 @@
 import { InMemoryTicTacToeApi } from './api'
+import { DbTicTacToeApi } from './db/db'
 import type { GameState } from './game'
 
-describe('InMemoryTicTacToeApi', () => {
-    let api: InMemoryTicTacToeApi
+describe('DbTicTacToeApi', () => {
+    let api: DbTicTacToeApi
 
     beforeEach(() => {
-        api = new InMemoryTicTacToeApi()
+        api = new DbTicTacToeApi()
     })
 
     describe('createGame', () => {
