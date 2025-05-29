@@ -3,19 +3,23 @@ export type Player = 'X' | 'O'
 export type GameResult = Player | 'Tie' | null
 export type Board = (Player | null)[][]
 export type GameState = {
+    id: string,
     currentPlayer: 'X' | 'O'
     board: Board
     result: GameResult
 }
 
-export const initialGameState: GameState = {
-    currentPlayer: 'X',
-    board: [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-    ],
-    result: null,
+export function createGame(): GameState {
+    return {
+        id: crypto.randomUUID(),
+        currentPlayer: 'X',
+        board: [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ],
+        result: null,
+    }
 }
 
 export function makeMove(gameState: GameState, row: number, col: number): GameState {
