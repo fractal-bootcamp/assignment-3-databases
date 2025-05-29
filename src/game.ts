@@ -1,9 +1,10 @@
 
 export type Player = 'X' | 'O'
 export type GameResult = Player | 'Tie' | null
+export type Board = (Player | null)[][]
 export type GameState = {
     currentPlayer: 'X' | 'O'
-    board: (Player | null)[][]
+    board: Board
     result: GameResult
 }
 
