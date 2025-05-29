@@ -30,3 +30,34 @@ export class InMemoryTicTacToeApi implements TicTacToeApi {
         return newGame
     }
 }
+
+export class TicTacToeApiClient implements TicTacToeApi {
+    async createGame(): Promise<GameState> {
+        const response = await fetch("/api/game", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const game = await response.json()
+        return game
+    }
+
+    async getGame(gameId: string): Promise<GameState> {
+        const response = await fetch(`/api/game/${gameId}`)
+        const game = await response.json()
+        return game
+    }
+
+    async makeMove(gameId: string, row: number, col: number): Promise<GameState> {
+        const response = await fetch(`/api/game/${gameId}/move`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ row, col })
+        })
+        const game = await response.json()
+        return game
+    }
+}

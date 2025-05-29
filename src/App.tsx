@@ -1,12 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import { GameState, initialGameState, makeMove, getResult } from './game'
+import { type GameState } from './game'
+import { TicTacToeApiClient } from './api'
 
 function App() {
-  const [gameState, setGameState] = useState<GameState>(initialGameState)
+  const api = useMemo(() => new TicTacToeApiClient(), [])
+  const [gameState, setGameState] = useState<GameState | undefined>()
+  async function initializeGame() {
+    const initialState = await api.createGame()
+    setGameState(initialState)
+  }
+  useEffect(() => {
+    initializeGame()
+  }, [])
 
-  const handleCellClick = (row: number, col: number) => {
-    setGameState(prev => makeMove(prev, row, col))
+  async function handleCellClick(row: number, col: number) {
+    const game = await api.makeMove(gameState!.id, row, col)
+    setGameState(game)
+  }
+
+  if (!gameState) {
+    return (
+      <div>Loading...</div>
+    )
   }
 
   return (
