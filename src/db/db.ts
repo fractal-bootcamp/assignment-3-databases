@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/postgres-js'
 import type { TicTacToeApi } from '../api';
 import  { type Board, type GameResult, type GameState, type Player, createGame as createGameState, makeMove as makeMoveState } from '../game';
 import { gamesTable } from './schema';
-import { eq } from 'drizzle-orm';
+import { eq, isNull } from 'drizzle-orm';
 const db = drizzle(process.env.DATABASE_URL!);
 
 export class DbTicTacToeApi implements TicTacToeApi {
@@ -28,7 +28,15 @@ export class DbTicTacToeApi implements TicTacToeApi {
         if (results.length === 0) {
             throw new Error('Game not found')
         }
-        const game = results[0]
+        return this.rowToGameState(results[0])
+    }
+
+    async getOpenGames(): Promise<GameState[]> {
+        const results = await db.select().from(gamesTable).where(isNull(gamesTable.result)).limit(10)
+        return results.map(this.rowToGameState)
+    }
+
+    rowToGameState(game: typeof gamesTable.$inferSelect): GameState {
         return {
             id: game.id,
             currentPlayer: game.currentPlayer as Player,
