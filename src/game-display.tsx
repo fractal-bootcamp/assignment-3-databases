@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import { type GameState } from './game'
-import { TicTacToeApiClient } from './api'
 
-function App() {
-  const api = useMemo(() => new TicTacToeApiClient(), [])
+function GameDisplay() {
+  const gameId = window.location.pathname.split('/').pop()
   const [gameState, setGameState] = useState<GameState | undefined>()
-  async function initializeGame() {
-    const initialState = await api.createGame()
-    setGameState(initialState)
-  }
-  useEffect(() => {
-    initializeGame()
+  const ws = useMemo<WebSocket>(() => {
+    const ws = new WebSocket(`/api/game/${gameId}`)
+    ws.onmessage = (event) => {
+      const move = JSON.parse(event.data)
+      console.log(move)
+      setGameState(move)
+    }
+    return ws
   }, [])
 
   async function handleCellClick(row: number, col: number) {
-    const game = await api.makeMove(gameState!.id, row, col)
-    setGameState(game)
+    ws.send(JSON.stringify({ row, col }))
   }
 
   if (!gameState) {
@@ -52,4 +52,4 @@ function App() {
   )
 }
 
-export default App
+export default GameDisplay
