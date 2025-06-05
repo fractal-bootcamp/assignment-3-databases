@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bun run --watch server.ts",
+    "dev": "bun run --hot server.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.44.1",
     "@types/jest": "^29.5.14",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.0",
@@ -18,10 +19,12 @@
     "postgres": "^3.4.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.6.2",
     "vite-express": "^0.21.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/express": "^5.0.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react-swc": "^3.9.0",

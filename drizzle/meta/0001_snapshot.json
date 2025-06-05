@@ -1,6 +1,6 @@
 {
-  "id": "9c5a99e8-92bb-4a8a-b344-4f0c0f3ba6e0",
-  "prevId": "dc21b296-58d8-49e1-8e5a-edd6d00a4b52",
+  "id": "605afa37-38c2-4775-aa59-edbda3bf2e2f",
+  "prevId": "888cc11e-f469-4771-964c-bf2af6b10b1e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -14,9 +14,21 @@
           "primaryKey": true,
           "notNull": true
         },
+        "player1": {
+          "name": "player1",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player2": {
+          "name": "player2",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "currentPlayer": {
           "name": "currentPlayer",
-          "type": "varchar(1)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -28,7 +40,7 @@
         },
         "result": {
           "name": "result",
-          "type": "varchar(1)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
         }

@@ -7,9 +7,11 @@ export type GameState = {
     currentPlayer: 'X' | 'O'
     board: Board
     result: GameResult
+    player1: string
+    player2: string
 }
 
-export function createGame(): GameState {
+export function createGame(player1: string, player2: string): GameState {
     return {
         id: crypto.randomUUID(),
         currentPlayer: 'X',
@@ -19,6 +21,8 @@ export function createGame(): GameState {
             [null, null, null]
         ],
         result: null,
+        player1,
+        player2,
     }
 }
 

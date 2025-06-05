@@ -1,6 +1,4 @@
-import { InMemoryTicTacToeApi } from './api'
 import { DbTicTacToeApi } from './db/db'
-import type { GameState } from './game'
 
 describe('DbTicTacToeApi', () => {
     let api: DbTicTacToeApi

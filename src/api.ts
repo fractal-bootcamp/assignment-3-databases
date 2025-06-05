@@ -1,16 +1,21 @@
 import  { type GameState, createGame as createGameState, makeMove as makeGameMove} from "./game";
 
 export interface TicTacToeApi {
-    createGame(): Promise<GameState>
+    createGame(player1: string, player2: string): Promise<GameState>
     makeMove(gameId: string, row: number, col: number): Promise<GameState>
     getGame(gameId: string): Promise<GameState>
+    getGames(): Promise<GameState[]>
 }
 
 export class InMemoryTicTacToeApi implements TicTacToeApi {
     private games: Map<string, GameState> = new Map()
 
-    async createGame(): Promise<GameState> {
-        const game = createGameState()
+    async getGames(): Promise<GameState[]> {
+        return Array.from(this.games.values())
+    }
+
+    async createGame(player1: string, player2: string): Promise<GameState> {
+        const game = createGameState(player1, player2)
         this.games.set(game.id, game)
         return game;
     }
@@ -32,21 +37,37 @@ export class InMemoryTicTacToeApi implements TicTacToeApi {
 }
 
 export class TicTacToeApiClient implements TicTacToeApi {
-    async createGame(): Promise<GameState> {
+    async getGames(): Promise<GameState[]> {
+        const response = await fetch("/api/games")
+        const games = await response.json()
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
+        return games
+    }
+
+    async createGame(player1: string, player2: string): Promise<GameState> {
         const response = await fetch("/api/game", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({ player1, player2 })
         })
-        const game = await response.json()
-        return game
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
+            const game = await response.json()
+            return game
     }
 
     async getGame(gameId: string): Promise<GameState> {
-        const response = await fetch(`/api/game/${gameId}`)
-        const game = await response.json()
-        return game
+            const response = await fetch(`/api/game/${gameId}`)
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
+            const game = await response.json()
+            return game
     }
 
     async makeMove(gameId: string, row: number, col: number): Promise<GameState> {
@@ -57,6 +78,9 @@ export class TicTacToeApiClient implements TicTacToeApi {
             },
             body: JSON.stringify({ row, col })
         })
+        if (!response.ok) {
+            throw new Error(response.statusText)
+        }
         const game = await response.json()
         return game
     }

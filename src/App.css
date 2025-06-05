@@ -6,12 +6,72 @@
   background: #f8f9fa;
   border-radius: 16px;
   box-shadow: 0 2px 16px rgba(44, 62, 80, 0.05);
+  color: #2c3e50;
+}
+
+.link {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2c3e50;
+  border: 1px solid #2c3e50;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.link:hover {
+  background-color: #2c3e50;
+  color: #f8f9fa;
 }
 
 h1 {
-  color: #2c3e50;
   margin-bottom: 1.2rem;
   font-size: 2rem;
+}
+
+h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+}
+
+#new-game {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#new-game label {
+  display: inline-block;
+}
+
+#new-game input {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+#games-list {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.game-item {
+  padding: 10px;
+  border: 1px solid #2c3e50;
+  border-radius: 8px;
+}
+
+.game-item:hover {
+  background-color: #2c3e50;
+  color: #f8f9fa;
+}
+
+#current-player, #player-names {
+  margin-bottom: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .board {
