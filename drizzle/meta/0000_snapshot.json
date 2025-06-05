@@ -1,5 +1,5 @@
 {
-  "id": "dc21b296-58d8-49e1-8e5a-edd6d00a4b52",
+  "id": "dc7cab1b-b39f-4972-8019-87d9de6f2c4c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -16,7 +16,7 @@
         },
         "currentPlayer": {
           "name": "currentPlayer",
-          "type": "varchar(1)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -28,9 +28,9 @@
         },
         "result": {
           "name": "result",
-          "type": "varchar(1)",
+          "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},

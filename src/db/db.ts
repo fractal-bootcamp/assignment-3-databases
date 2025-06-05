@@ -1,10 +1,16 @@
+import { config } from "@dotenvx/dotenvx";
 
 import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
 import type { TicTacToeApi } from '../api';
 import  { type Board, type GameResult, type GameState, type Player, createGame as createGameState, makeMove as makeMoveState } from '../game';
 import { gamesTable } from './schema';
-import { eq } from 'drizzle-orm';
-const db = drizzle(process.env.DATABASE_URL!);
+import { eq, isNull } from 'drizzle-orm';
+
+config({ path: ".env", override: true });
+
+const client = postgres(process.env.SUPABASE_URL!)
+const db = drizzle(client)
 
 export class DbTicTacToeApi implements TicTacToeApi {
 
@@ -35,5 +41,15 @@ export class DbTicTacToeApi implements TicTacToeApi {
             board: game.board as Board,
             result: game.result as GameResult,
         }
+    }
+
+    async getGames(): Promise<GameState[]> {
+        const results = await db.select().from(gamesTable)
+        return results.map(game => ({
+            id: game.id,
+            currentPlayer: game.currentPlayer as Player,
+            board: game.board as Board,
+            result: game.result as GameResult,
+        }))
     }
 }
