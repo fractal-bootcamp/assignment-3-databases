@@ -26,4 +26,7 @@ app.post("/api/game/:gameId/move", async (req, res) => {
     res.json(game)
 })
 
-ViteExpress.listen(app, 3000, () => console.log("Server is listening..."));
+const PORT = parseInt(process.env.PORT || "3000");
+
+ViteExpress.listen(app, PORT,
+    () => console.log(`Server is listening at http://localhost:${PORT}`));
