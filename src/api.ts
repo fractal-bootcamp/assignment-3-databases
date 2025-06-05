@@ -4,6 +4,7 @@ export interface TicTacToeApi {
     createGame(): Promise<GameState>
     makeMove(gameId: string, row: number, col: number): Promise<GameState>
     getGame(gameId: string): Promise<GameState>
+    getGames(): Promise<GameState[]>
 }
 
 export class InMemoryTicTacToeApi implements TicTacToeApi {
@@ -13,6 +14,10 @@ export class InMemoryTicTacToeApi implements TicTacToeApi {
         const game = createGameState()
         this.games.set(game.id, game)
         return game;
+    }
+
+    async getGames(): Promise<GameState[]> {
+        return Array.from(this.games.values())
     }
 
     async getGame(gameId: string): Promise<GameState> {
@@ -41,6 +46,12 @@ export class TicTacToeApiClient implements TicTacToeApi {
         })
         const game = await response.json()
         return game
+    }
+
+    async getGames(): Promise<GameState[]> {
+        const response = await fetch("/api/games")
+        const games = await response.json()
+        return games
     }
 
     async getGame(gameId: string): Promise<GameState> {

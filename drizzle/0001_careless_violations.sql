@@ -1,1 +1,0 @@
-ALTER TABLE "tic_tac_toe_games" ALTER COLUMN "result" DROP NOT NULL;
