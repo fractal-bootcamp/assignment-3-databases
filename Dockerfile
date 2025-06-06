@@ -39,4 +39,4 @@ RUN chown -R bun:bun /usr/src/app
 USER bun
 EXPOSE 3000/tcp
 EXPOSE 5173/tcp
-CMD ["sh", "-c", "bun run dev & vite"]
+CMD ["sh", "-c", "bun run dev"]
